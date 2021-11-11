@@ -60,6 +60,9 @@ class Student:
             else:
                 return f'Студент {student.name} {student.surname} со средней оценкой {student.average_grade()} превосходит в учебе студента {self.name} {self.surname} со средней оценкой {self.average_grade()}'
 
+    def __gt__(self, other):
+        return self.average_grade() > other.average_grade()
+
     def average_grade(self):
         if len(self.grades) > 0:
             count = 0
@@ -117,6 +120,9 @@ class Lecturer(Mentor):  # проводят лекции и получают о�
             return f'{val / count:.2f}'
         else:
             return 0
+
+    def __lt__(self, other):
+        return self.average_rating() < other.average_rating()
 
     def comparison_of_ratings(self, lecture):
         if isinstance(lecture, Lecturer):
@@ -186,7 +192,6 @@ your_student = Student('Устин', 'Морозов', 'men')
 my_reviewer = Reviewer('Petr', 'Ivanov')
 your_reviewer = Reviewer('Гариб', 'Тагиев')
 
-
 my_reviewer.course_of_study.append('Python')
 my_student.courses_in_progress.append('Python')
 your_student.courses_in_progress.append('Python')
@@ -215,6 +220,14 @@ print(your_lecture)
 
 print(my_lecture.comparison_of_ratings(your_lecture))
 print(my_student.comparison_of_ratings(your_student))
+
+print(my_lecture < your_lecture)
+print(my_lecture > your_lecture)
+print(my_lecture == your_lecture)
+
+print(my_student < your_student)
+print(my_student > your_student)
+print(my_student == your_student)
 
 set_of_course_lectures = set()
 for i in Lecturer.list_of_courses:
